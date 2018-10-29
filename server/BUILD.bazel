@@ -3,7 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 go_library(
     name = "go_default_library",
     srcs = ["server.go"],
-    data = ["login.gtpl"],
+    data = glob(["*.gtpl"]),
     importpath = "github.com/dayfine/typescript-react-bazel/server",
     visibility = ["//visibility:private"],
 )
