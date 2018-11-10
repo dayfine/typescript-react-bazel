@@ -29,6 +29,7 @@ func SayhelloName(w http.ResponseWriter, r *http.Request) {
 func Login(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("method:", r.Method)
 
+	r.ParseForm()
 	if r.Method == "GET" {
 		crutime := time.Now().Unix()
 		h := md5.New()
@@ -39,7 +40,6 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		t.Execute(w, token)
 	} else {
 		//请求的是登录数据，那么执行登录的逻辑判断
-		r.ParseForm()
 		token := r.Form.Get("token")
 		if token != "" {
 			// verify it's a legitmate token
