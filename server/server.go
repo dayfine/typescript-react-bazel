@@ -8,13 +8,14 @@ import (
 
 	"github.com/dayfine/typescript-react-bazel/server/handlers"
 	"github.com/dayfine/typescript-react-bazel/server/session"
+	_ "github.com/dayfine/typescript-react-bazel/server/session/memory"
 )
 
 var globalSessions *session.Manager
 
 func init() {
 	globalSessions, _ = session.NewManager("memory", "gosessionid", 3600)
-	// go globalSessions.GC()
+	go globalSessions.GC()
 }
 
 func countHandler(w http.ResponseWriter, r *http.Request) {
@@ -31,7 +32,7 @@ func countHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		sess.Set("countnum", (ct.(int) + 1))
 	}
-	t, _ := template.ParseFiles("")
+	t, _ := template.ParseFiles("server/count.gtpl")
 	w.Header().Set("Content-Type", "text/html")
 	t.Execute(w, sess.Get("countnum"))
 }

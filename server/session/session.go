@@ -10,6 +10,14 @@ import (
 	"time"
 )
 
+// global session mananger
+type Manager struct {
+	cookieName  string     // private cookiename
+	lock        sync.Mutex // protects session
+	provider    Provider
+	maxLifeTime int64
+}
+
 type Session interface {
 	Set(key, value interface{}) error
 	Get(key interface{}) interface{}
@@ -37,14 +45,6 @@ func Register(name string, provider Provider) {
 		panic("session: Register called twice for provider " + name)
 	}
 	provides[name] = provider
-}
-
-// global session mananger
-type Manager struct {
-	cookieName  string     // private cookiename
-	lock        sync.Mutex // protects session
-	provider    Provider
-	maxLifeTime int64
 }
 
 func NewManager(provideName, cookieName string, maxLifeTime int64) (*Manager, error) {
