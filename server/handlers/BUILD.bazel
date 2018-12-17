@@ -1,0 +1,9 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["handlers.go"],
+    data = glob(["templates/*.gtpl"]),
+    importpath = "github.com/dayfine/typescript-react-bazel/server/handlers",
+    visibility = ["//visibility:public"],
+)
