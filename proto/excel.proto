@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package excel;
+
+message Workbook {
+  // the host where the grpc server is running
+  string filepath = 1;
+
+  // collection of worksheets
+  repeated Worksheet sheets = 2;
+
+}
+
+message Worksheet {
+  // sheetId / index
+  int32 id = 1;
+
+  // Sheet name
+  string name = 2;
+
+}
+
